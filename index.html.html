@@ -1,0 +1,2375 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eagles Elite Transport Service | EETS</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@300;400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+:root {
+  --gold: #F5A623;
+  --gold-light: #FFD166;
+  --gold-dark: #C8860A;
+  --black: #0A0A0A;
+  --dark: #111111;
+  --dark2: #1A1A1A;
+  --dark3: #222222;
+  --dark4: #2A2A2A;
+  --white: #FFFFFF;
+  --gray: #888888;
+  --gray-light: #CCCCCC;
+  --sky: #4FC3F7;
+  --green: #2ECC71;
+  --red: #E74C3C;
+  --card-bg: #181818;
+  --border: rgba(245,166,35,0.2);
+  --shadow: 0 8px 32px rgba(0,0,0,0.6);
+  --nav-h: 80px;
+}
+[data-theme="light"] {
+  --black: #F5F5F0;
+  --dark: #FFFFFF;
+  --dark2: #F0EDE8;
+  --dark3: #E8E4DE;
+  --dark4: #DDD8D0;
+  --white: #1A1A1A;
+  --gray: #555555;
+  --gray-light: #333333;
+  --card-bg: #FFFFFF;
+  --border: rgba(245,166,35,0.3);
+  --shadow: 0 8px 32px rgba(0,0,0,0.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Montserrat',sans-serif;
+  background:var(--black);
+  color:var(--white);
+  overflow-x:hidden;
+  transition:background 0.3s,color 0.3s;
+}
+
+/* ANIMATED BACKGROUND */
+.bg-canvas{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;pointer-events:none;overflow:hidden;
+}
+.bg-canvas::before{
+  content:'';position:absolute;inset:0;
+  background: radial-gradient(ellipse at 20% 20%, rgba(245,166,35,0.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 80%, rgba(79,195,247,0.04) 0%, transparent 60%);
+  animation: bgPulse 8s ease-in-out infinite alternate;
+}
+@keyframes bgPulse{
+  0%{opacity:0.5;transform:scale(1);}
+  100%{opacity:1;transform:scale(1.05);}
+}
+.road-lines{
+  position:absolute;bottom:0;left:0;width:200%;height:4px;
+  background:repeating-linear-gradient(90deg,var(--gold) 0,var(--gold) 60px,transparent 60px,transparent 120px);
+  opacity:0.08;
+  animation:roadMove 3s linear infinite;
+}
+@keyframes roadMove{0%{transform:translateX(0);}100%{transform:translateX(-50%)}}
+
+/* PARTICLES */
+.particle{
+  position:absolute;border-radius:50%;
+  background:var(--gold);opacity:0;
+  animation:particleFloat linear infinite;
+}
+@keyframes particleFloat{
+  0%{opacity:0;transform:translateY(100vh) scale(0);}
+  10%{opacity:0.4;}
+  90%{opacity:0.1;}
+  100%{opacity:0;transform:translateY(-20px) scale(1);}
+}
+
+/* NAVBAR */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  height:var(--nav-h);
+  background:rgba(10,10,10,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 40px;
+  transition:all 0.3s;
+}
+[data-theme="light"] nav{background:rgba(255,255,255,0.95);}
+nav.scrolled{
+  height:65px;
+  background:rgba(10,10,10,0.98);
+  box-shadow:0 4px 20px rgba(245,166,35,0.15);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:12px;cursor:pointer;
+  text-decoration:none;
+}
+.nav-logo img{width:52px;height:52px;object-fit:contain;border-radius:50%;}
+.nav-logo-text{
+  display:flex;flex-direction:column;line-height:1.1;
+}
+.nav-logo-text span:first-child{
+  font-family:'Bebas Neue',sans-serif;font-size:1.4rem;
+  color:var(--gold);letter-spacing:2px;
+}
+.nav-logo-text span:last-child{
+  font-size:0.58rem;color:var(--gray-light);letter-spacing:1.5px;
+  text-transform:uppercase;
+}
+.nav-links{display:flex;align-items:center;gap:8px;}
+.nav-links a{
+  color:var(--gray-light);text-decoration:none;
+  font-size:0.78rem;font-weight:600;letter-spacing:1px;text-transform:uppercase;
+  padding:8px 14px;border-radius:6px;
+  transition:all 0.25s;position:relative;
+}
+.nav-links a:hover,.nav-links a.active{color:var(--gold);}
+.nav-links a::after{
+  content:'';position:absolute;bottom:4px;left:50%;right:50%;
+  height:2px;background:var(--gold);border-radius:2px;
+  transition:all 0.25s;
+}
+.nav-links a:hover::after,.nav-links a.active::after{left:14px;right:14px;}
+.nav-actions{display:flex;align-items:center;gap:12px;}
+.theme-btn{
+  background:none;border:1px solid var(--border);
+  color:var(--gold);cursor:pointer;
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:1rem;transition:all 0.25s;
+}
+.theme-btn:hover{background:var(--gold);color:#000;}
+.wa-btn-nav{
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff;border:none;cursor:pointer;
+  padding:9px 18px;border-radius:25px;
+  font-size:0.75rem;font-weight:700;letter-spacing:0.5px;
+  display:flex;align-items:center;gap:6px;
+  transition:all 0.25s;text-decoration:none;
+}
+.wa-btn-nav:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(37,211,102,0.4);}
+.hamburger{
+  display:none;flex-direction:column;gap:5px;cursor:pointer;
+  background:none;border:none;padding:4px;
+}
+.hamburger span{
+  width:25px;height:2px;background:var(--gold);border-radius:2px;
+  transition:all 0.3s;display:block;
+}
+
+/* PAGES */
+.page{display:none;min-height:100vh;position:relative;z-index:1;}
+.page.active{display:block;}
+
+/* ===== HOME PAGE ===== */
+.hero{
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:var(--nav-h) 20px 60px;
+  position:relative;overflow:hidden;
+}
+.hero-eagle{
+  position:absolute;right:-60px;top:50%;transform:translateY(-50%);
+  width:50vw;max-width:600px;opacity:0.04;
+  pointer-events:none;
+  animation:eagleDrift 6s ease-in-out infinite alternate;
+}
+@keyframes eagleDrift{0%{transform:translateY(-50%) scale(1);}100%{transform:translateY(-52%) scale(1.03);}}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(245,166,35,0.1);border:1px solid rgba(245,166,35,0.3);
+  color:var(--gold);padding:6px 18px;border-radius:25px;
+  font-size:0.72rem;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:24px;
+  animation:fadeInDown 0.8s ease both;
+}
+.hero h1{
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(3rem,9vw,7.5rem);
+  line-height:0.9;letter-spacing:3px;
+  animation:fadeInUp 0.8s ease 0.2s both;
+}
+.hero h1 .gold{color:var(--gold);}
+.hero h1 .outline{
+  -webkit-text-stroke:2px var(--gold);
+  color:transparent;
+}
+.hero-sub{
+  font-size:clamp(0.85rem,2vw,1.1rem);
+  color:var(--gray-light);max-width:600px;margin:20px auto;
+  font-weight:300;line-height:1.7;letter-spacing:0.5px;
+  animation:fadeInUp 0.8s ease 0.4s both;
+}
+.hero-ctas{
+  display:flex;gap:16px;flex-wrap:wrap;justify-content:center;
+  animation:fadeInUp 0.8s ease 0.6s both;
+  margin-top:10px;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold-dark));
+  color:#000;border:none;cursor:pointer;
+  padding:14px 32px;border-radius:4px;
+  font-size:0.85rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;
+  transition:all 0.25s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+  position:relative;overflow:hidden;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,0.2),transparent);
+  opacity:0;transition:opacity 0.25s;
+}
+.btn-primary:hover::before{opacity:1;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(245,166,35,0.4);}
+.btn-outline{
+  background:transparent;color:var(--white);
+  border:2px solid rgba(255,255,255,0.3);cursor:pointer;
+  padding:14px 32px;border-radius:4px;
+  font-size:0.85rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;
+  transition:all 0.25s;text-decoration:none;display:inline-flex;align-items:center;gap:8px;
+}
+.btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-3px);}
+
+.hero-stats{
+  display:flex;gap:50px;margin-top:60px;flex-wrap:wrap;justify-content:center;
+  animation:fadeInUp 0.8s ease 0.8s both;
+}
+.stat-item{text-align:center;}
+.stat-num{
+  font-family:'Bebas Neue',sans-serif;font-size:2.8rem;
+  color:var(--gold);line-height:1;
+}
+.stat-label{font-size:0.65rem;color:var(--gray);letter-spacing:2px;text-transform:uppercase;margin-top:4px;}
+
+/* SCROLL INDICATOR */
+.scroll-ind{
+  position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  color:var(--gray);font-size:0.65rem;letter-spacing:2px;
+  animation:fadeIn 1s ease 1.5s both;
+}
+.scroll-line{
+  width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);
+  animation:scrollBounce 1.5s ease-in-out infinite;
+}
+@keyframes scrollBounce{0%,100%{transform:scaleY(1);}50%{transform:scaleY(0.6);}}
+
+/* SECTIONS COMMON */
+section{padding:90px 0;}
+.container{max-width:1200px;margin:0 auto;padding:0 40px;}
+.section-label{
+  font-size:0.7rem;color:var(--gold);letter-spacing:3px;text-transform:uppercase;
+  font-weight:700;margin-bottom:12px;
+}
+.section-title{
+  font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);
+  letter-spacing:2px;line-height:1.1;
+}
+.section-title span{color:var(--gold);}
+.section-desc{
+  color:var(--gray);font-size:0.9rem;line-height:1.8;
+  max-width:600px;margin-top:12px;
+}
+.divider{
+  width:60px;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  margin:20px 0;border-radius:2px;
+}
+
+/* WHY CHOOSE US */
+.features-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px;
+  margin-top:50px;
+}
+.feature-card{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:12px;padding:32px 28px;
+  position:relative;overflow:hidden;
+  transition:all 0.3s;cursor:default;
+}
+.feature-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,var(--gold),var(--gold-light));
+  transform:scaleX(0);transform-origin:left;transition:transform 0.3s;
+}
+.feature-card:hover::before{transform:scaleX(1);}
+.feature-card:hover{
+  transform:translateY(-6px);
+  border-color:rgba(245,166,35,0.4);
+  box-shadow:0 20px 40px rgba(0,0,0,0.4);
+}
+.feature-icon{
+  width:52px;height:52px;border-radius:12px;
+  background:rgba(245,166,35,0.1);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.4rem;color:var(--gold);margin-bottom:20px;
+  transition:all 0.3s;
+}
+.feature-card:hover .feature-icon{
+  background:var(--gold);color:#000;transform:scale(1.1);
+}
+.feature-card h3{
+  font-family:'Rajdhani',sans-serif;font-size:1.15rem;
+  font-weight:700;letter-spacing:0.5px;margin-bottom:10px;
+}
+.feature-card p{font-size:0.82rem;color:var(--gray);line-height:1.7;}
+
+/* FLEET SECTION */
+.fleet-showcase{
+  display:grid;grid-template-columns:1fr 1fr;gap:3px;
+  border-radius:16px;overflow:hidden;margin-top:50px;
+}
+.fleet-item{
+  position:relative;overflow:hidden;height:250px;cursor:pointer;
+}
+.fleet-item img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform 0.5s;
+}
+.fleet-item:hover img{transform:scale(1.08);}
+.fleet-item-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,0.8) 0%,transparent 60%);
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:20px;
+}
+.fleet-item-overlay h4{
+  font-family:'Bebas Neue',sans-serif;font-size:1.3rem;
+  color:var(--gold);letter-spacing:1px;
+}
+.fleet-item-overlay p{font-size:0.75rem;color:rgba(255,255,255,0.7);}
+.fleet-item:first-child{grid-column:span 2;height:320px;}
+
+/* ===== ROUTES PAGE ===== */
+.routes-hero{
+  padding:calc(var(--nav-h) + 40px) 0 40px;
+  background:linear-gradient(135deg,rgba(245,166,35,0.05) 0%,transparent 100%);
+  border-bottom:1px solid var(--border);
+}
+.routes-filter{
+  display:flex;gap:10px;flex-wrap:wrap;margin-top:30px;
+}
+.filter-btn{
+  background:var(--dark3);border:1px solid var(--border);
+  color:var(--gray-light);cursor:pointer;
+  padding:8px 20px;border-radius:25px;
+  font-size:0.75rem;font-weight:600;letter-spacing:0.5px;
+  transition:all 0.25s;
+}
+.filter-btn:hover,.filter-btn.active{
+  background:var(--gold);color:#000;border-color:var(--gold);
+}
+.routes-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));
+  gap:24px;margin-top:40px;padding-bottom:80px;
+}
+.route-card{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  transition:all 0.3s;cursor:pointer;
+  position:relative;
+}
+.route-card:hover{
+  transform:translateY(-8px);
+  border-color:var(--gold);
+  box-shadow:0 20px 50px rgba(0,0,0,0.5);
+}
+.route-card-img{
+  width:100%;height:180px;object-fit:cover;
+  transition:transform 0.5s;
+}
+.route-card:hover .route-card-img{transform:scale(1.05);}
+.route-card-body{padding:22px 20px;}
+.route-badge{
+  display:inline-block;
+  background:rgba(245,166,35,0.15);
+  color:var(--gold);font-size:0.65rem;font-weight:700;
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:4px 10px;border-radius:4px;margin-bottom:10px;
+}
+.route-badge.h11{background:rgba(79,195,247,0.15);color:var(--sky);}
+.route-badge.corp{background:rgba(46,204,113,0.15);color:var(--green);}
+.route-card-body h3{
+  font-family:'Rajdhani',sans-serif;font-size:1.2rem;font-weight:700;
+  margin-bottom:8px;
+}
+.route-card-body p{font-size:0.78rem;color:var(--gray);line-height:1.6;margin-bottom:14px;}
+.route-meta{
+  display:flex;gap:12px;flex-wrap:wrap;
+  border-top:1px solid var(--border);padding-top:14px;
+}
+.route-meta-item{
+  display:flex;align-items:center;gap:5px;
+  font-size:0.72rem;color:var(--gray-light);
+}
+.route-meta-item i{color:var(--gold);font-size:0.8rem;}
+.route-fee{
+  font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;
+  color:var(--gold);margin-top:10px;
+}
+.route-fee span{font-size:0.75rem;color:var(--gray);font-weight:400;}
+
+/* TIMINGS MODAL */
+.modal-overlay{
+  position:fixed;inset:0;z-index:2000;
+  background:rgba(0,0,0,0.85);backdrop-filter:blur(8px);
+  display:none;align-items:center;justify-content:center;
+  padding:20px;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--dark2);border:1px solid var(--border);
+  border-radius:16px;max-width:600px;width:100%;max-height:90vh;
+  overflow-y:auto;position:relative;
+  animation:modalIn 0.3s ease;
+}
+@keyframes modalIn{
+  from{opacity:0;transform:scale(0.9) translateY(20px);}
+  to{opacity:1;transform:scale(1) translateY(0);}
+}
+.modal-header{
+  padding:24px 28px 0;
+  display:flex;justify-content:space-between;align-items:flex-start;
+  border-bottom:1px solid var(--border);padding-bottom:20px;
+}
+.modal-header h2{
+  font-family:'Bebas Neue',sans-serif;font-size:1.8rem;
+  color:var(--gold);letter-spacing:1px;
+}
+.modal-close{
+  background:none;border:1px solid var(--border);
+  color:var(--gray-light);cursor:pointer;
+  width:36px;height:36px;border-radius:8px;
+  font-size:1.1rem;transition:all 0.2s;
+  display:flex;align-items:center;justify-content:center;
+}
+.modal-close:hover{background:var(--red);border-color:var(--red);color:#fff;}
+.modal-body{padding:24px 28px;}
+.timing-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.timing-col h4{
+  font-size:0.7rem;color:var(--gold);letter-spacing:2px;
+  text-transform:uppercase;margin-bottom:12px;
+  display:flex;align-items:center;gap:6px;
+}
+.timing-item{
+  display:flex;align-items:center;gap:10px;
+  padding:8px 12px;background:var(--dark3);border-radius:8px;
+  margin-bottom:8px;font-size:0.82rem;
+}
+.timing-item i{color:var(--gold);font-size:0.75rem;}
+.modal-fee{
+  background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);
+  border-radius:10px;padding:16px 20px;margin-top:20px;
+}
+.modal-fee-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:6px 0;font-size:0.85rem;
+  border-bottom:1px solid rgba(245,166,35,0.1);
+}
+.modal-fee-row:last-child{border-bottom:none;}
+.modal-fee-row .amount{font-weight:700;color:var(--gold);}
+.modal-wa{
+  display:flex;gap:12px;margin-top:20px;
+}
+.wa-contact-btn{
+  flex:1;background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff;border:none;cursor:pointer;
+  padding:12px;border-radius:10px;
+  font-size:0.8rem;font-weight:700;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:all 0.25s;text-decoration:none;
+}
+.wa-contact-btn:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(37,211,102,0.35);}
+
+/* ===== PICKUP STATIONS PAGE ===== */
+.stations-hero{
+  padding:calc(var(--nav-h) + 40px) 0 40px;
+}
+.stations-grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));
+  gap:24px;margin-top:40px;padding-bottom:80px;
+}
+.station-card{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:14px;overflow:hidden;
+  transition:all 0.3s;
+}
+.station-card:hover{
+  transform:translateY(-5px);
+  border-color:rgba(245,166,35,0.5);
+  box-shadow:0 16px 40px rgba(0,0,0,0.4);
+}
+.station-header{
+  padding:20px 22px;
+  background:linear-gradient(135deg,rgba(245,166,35,0.12),rgba(245,166,35,0.04));
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:14px;
+}
+.station-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:rgba(245,166,35,0.15);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:1.2rem;flex-shrink:0;
+}
+.station-header h3{
+  font-family:'Rajdhani',sans-serif;font-size:1.1rem;font-weight:700;
+}
+.station-header p{font-size:0.7rem;color:var(--gray);}
+.station-stops{padding:16px 22px;}
+.stop-item{
+  display:flex;align-items:center;gap:8px;
+  padding:5px 0;font-size:0.78rem;color:var(--gray-light);
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.stop-item:last-child{border-bottom:none;}
+.stop-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gold);flex-shrink:0;
+}
+
+/* ===== PRICING PAGE ===== */
+.pricing-hero{
+  padding:calc(var(--nav-h) + 40px) 0 40px;
+}
+.pricing-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:24px;margin-top:40px;
+}
+.pricing-card{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:16px;padding:32px 28px;
+  position:relative;overflow:hidden;transition:all 0.3s;
+}
+.pricing-card.featured{
+  border-color:var(--gold);
+  background:linear-gradient(135deg,rgba(245,166,35,0.08),var(--card-bg));
+}
+.pricing-card.featured::before{
+  content:'MOST POPULAR';
+  position:absolute;top:18px;right:-28px;
+  background:var(--gold);color:#000;
+  font-size:0.58rem;font-weight:800;letter-spacing:2px;
+  padding:4px 40px;transform:rotate(35deg);
+}
+.pricing-card:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,0.4);}
+.pricing-name{
+  font-size:0.65rem;color:var(--gold);letter-spacing:2px;
+  text-transform:uppercase;font-weight:700;margin-bottom:8px;
+}
+.pricing-route{
+  font-family:'Rajdhani',sans-serif;font-size:1.3rem;font-weight:700;
+  margin-bottom:6px;
+}
+.pricing-amount{
+  font-family:'Bebas Neue',sans-serif;font-size:3rem;
+  color:var(--gold);line-height:1;margin:16px 0;
+}
+.pricing-amount sup{font-size:1.2rem;vertical-align:super;}
+.pricing-amount sub{font-size:0.85rem;color:var(--gray);}
+.pricing-features{list-style:none;margin:20px 0;display:flex;flex-direction:column;gap:10px;}
+.pricing-features li{
+  display:flex;align-items:center;gap:10px;
+  font-size:0.82rem;color:var(--gray-light);
+}
+.pricing-features li i{color:var(--green);font-size:0.85rem;}
+.pricing-note{
+  font-size:0.7rem;color:var(--gray);
+  border-top:1px solid var(--border);padding-top:16px;margin-top:16px;
+  line-height:1.6;
+}
+
+/* PAYMENT METHODS */
+.payment-section{
+  background:var(--dark2);border:1px solid var(--border);
+  border-radius:16px;padding:40px;margin-top:50px;
+}
+.payment-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:20px;margin-top:30px;
+}
+.payment-card{
+  background:var(--dark3);border:1px solid var(--border);
+  border-radius:12px;padding:20px;
+  transition:all 0.25s;
+}
+.payment-card:hover{border-color:var(--gold);transform:translateY(-3px);}
+.payment-card h4{
+  font-size:0.8rem;font-weight:700;color:var(--gold);
+  margin-bottom:10px;display:flex;align-items:center;gap:8px;
+}
+.payment-card p{font-size:0.75rem;color:var(--gray-light);line-height:1.6;}
+
+/* TERMS ACCORDION */
+.terms-section{margin-top:50px;padding-bottom:80px;}
+.accordion-item{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:10px;margin-bottom:10px;overflow:hidden;
+}
+.accordion-header{
+  padding:18px 24px;cursor:pointer;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:background 0.2s;
+}
+.accordion-header:hover{background:rgba(245,166,35,0.05);}
+.accordion-header h4{font-size:0.88rem;font-weight:600;}
+.accordion-icon{color:var(--gold);font-size:0.9rem;transition:transform 0.3s;}
+.accordion-item.open .accordion-icon{transform:rotate(45deg);}
+.accordion-body{
+  display:none;padding:0 24px 20px;
+  font-size:0.82rem;color:var(--gray);line-height:1.8;
+}
+.accordion-item.open .accordion-body{display:block;}
+
+/* ===== CONTACT PAGE ===== */
+.contact-hero{
+  padding:calc(var(--nav-h) + 40px) 0 40px;
+}
+.contact-grid{
+  display:grid;grid-template-columns:1fr 1.5fr;gap:40px;
+  margin-top:40px;padding-bottom:80px;
+}
+.contact-info{display:flex;flex-direction:column;gap:20px;}
+.contact-card{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:14px;padding:24px;
+  transition:all 0.25s;
+}
+.contact-card:hover{border-color:var(--gold);transform:translateX(5px);}
+.contact-card-header{
+  display:flex;align-items:center;gap:12px;margin-bottom:12px;
+}
+.contact-card-icon{
+  width:42px;height:42px;border-radius:10px;
+  background:rgba(245,166,35,0.12);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gold);font-size:1.1rem;flex-shrink:0;
+}
+.contact-card h3{font-size:0.85rem;font-weight:700;}
+.contact-card p{font-size:0.8rem;color:var(--gray-light);line-height:1.7;}
+.contact-card a{color:var(--gold);text-decoration:none;}
+.contact-card a:hover{text-decoration:underline;}
+
+.wa-panel{
+  background:linear-gradient(135deg,rgba(37,211,102,0.1),rgba(18,140,126,0.08));
+  border:1px solid rgba(37,211,102,0.25);
+  border-radius:14px;padding:28px;
+}
+.wa-panel h3{
+  font-family:'Bebas Neue',sans-serif;font-size:1.6rem;
+  color:#25D366;letter-spacing:1px;margin-bottom:6px;
+}
+.wa-panel p{font-size:0.82rem;color:var(--gray-light);margin-bottom:20px;line-height:1.6;}
+.wa-contacts{display:flex;flex-direction:column;gap:12px;}
+.wa-person{
+  background:var(--dark3);border-radius:10px;padding:16px 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  flex-wrap:wrap;gap:12px;
+}
+.wa-person-info h4{font-size:0.88rem;font-weight:700;}
+.wa-person-info p{font-size:0.72rem;color:var(--gray);margin-top:2px;}
+.wa-person-btn{
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff;border:none;cursor:pointer;
+  padding:9px 18px;border-radius:8px;
+  font-size:0.75rem;font-weight:700;
+  display:flex;align-items:center;gap:6px;
+  text-decoration:none;transition:all 0.25s;
+}
+.wa-person-btn:hover{transform:scale(1.05);box-shadow:0 5px 15px rgba(37,211,102,0.35);}
+
+.contact-form{
+  background:var(--card-bg);border:1px solid var(--border);
+  border-radius:14px;padding:32px;
+}
+.contact-form h3{
+  font-family:'Bebas Neue',sans-serif;font-size:1.6rem;
+  color:var(--gold);letter-spacing:1px;margin-bottom:24px;
+}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+.form-group label{font-size:0.72rem;font-weight:600;letter-spacing:0.5px;color:var(--gray-light);}
+.form-group input,.form-group select,.form-group textarea{
+  background:var(--dark3);border:1px solid var(--border);
+  color:var(--white);padding:11px 14px;border-radius:8px;
+  font-size:0.83rem;font-family:'Montserrat',sans-serif;
+  transition:border-color 0.2s;outline:none;
+}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+  border-color:var(--gold);
+}
+.form-group textarea{resize:vertical;min-height:100px;}
+.form-group select option{background:var(--dark2);}
+
+/* FLOATING WA BUTTON */
+.float-wa{
+  position:fixed;bottom:30px;right:30px;z-index:999;
+  display:flex;flex-direction:column;align-items:flex-end;gap:10px;
+}
+.float-wa-main{
+  width:58px;height:58px;border-radius:50%;
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:1.6rem;cursor:pointer;border:none;
+  box-shadow:0 6px 25px rgba(37,211,102,0.4);
+  transition:all 0.25s;
+}
+.float-wa-main:hover{transform:scale(1.1);}
+.float-wa-pulse{
+  position:absolute;inset:0;border-radius:50%;
+  background:rgba(37,211,102,0.3);
+  animation:waPulse 2s ease-out infinite;
+}
+@keyframes waPulse{
+  0%{transform:scale(1);opacity:0.8;}
+  100%{transform:scale(1.8);opacity:0;}
+}
+.float-wa-menu{
+  display:none;flex-direction:column;gap:8px;align-items:flex-end;
+}
+.float-wa-menu.open{display:flex;}
+.float-wa-item{
+  background:var(--dark2);border:1px solid rgba(37,211,102,0.3);
+  color:var(--white);text-decoration:none;
+  padding:10px 16px;border-radius:25px;
+  font-size:0.78rem;font-weight:600;
+  display:flex;align-items:center;gap:8px;
+  transition:all 0.2s;white-space:nowrap;
+  box-shadow:var(--shadow);
+}
+.float-wa-item:hover{
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  border-color:transparent;transform:translateX(-5px);
+}
+.float-wa-item i{color:#25D366;}
+.float-wa-item:hover i{color:#fff;}
+
+/* FOOTER */
+footer{
+  background:var(--dark2);border-top:1px solid var(--border);
+  padding:60px 0 0;
+}
+.footer-grid{
+  display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr;
+  gap:40px;padding-bottom:40px;
+  border-bottom:1px solid var(--border);
+}
+.footer-brand img{width:70px;height:70px;object-fit:contain;border-radius:50%;margin-bottom:14px;}
+.footer-brand p{font-size:0.78rem;color:var(--gray);line-height:1.8;max-width:260px;}
+.footer-col h4{
+  font-size:0.7rem;color:var(--gold);letter-spacing:2px;
+  text-transform:uppercase;font-weight:700;margin-bottom:16px;
+}
+.footer-col a{
+  display:block;font-size:0.78rem;color:var(--gray);
+  text-decoration:none;padding:4px 0;
+  transition:color 0.2s;cursor:pointer;
+}
+.footer-col a:hover{color:var(--gold);}
+.footer-bottom{
+  padding:20px 0;
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;
+}
+.footer-bottom p{font-size:0.72rem;color:var(--gray);}
+.footer-bottom span{color:var(--gold);}
+.social-links{display:flex;gap:10px;}
+.social-link{
+  width:36px;height:36px;border-radius:8px;
+  background:var(--dark3);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--gray);font-size:0.9rem;
+  transition:all 0.25s;text-decoration:none;
+}
+.social-link:hover{background:var(--gold);color:#000;border-color:var(--gold);}
+
+/* MOBILE NAV */
+.mobile-nav{
+  position:fixed;top:0;right:-100%;width:80%;max-width:320px;height:100vh;
+  background:var(--dark2);border-left:1px solid var(--border);
+  z-index:2000;transition:right 0.3s ease;
+  padding:90px 30px 30px;overflow-y:auto;
+}
+.mobile-nav.open{right:0;}
+.mobile-nav a{
+  display:block;padding:14px 0;
+  color:var(--gray-light);text-decoration:none;
+  font-size:1rem;font-weight:600;letter-spacing:0.5px;
+  border-bottom:1px solid var(--border);
+  transition:color 0.2s;cursor:pointer;
+}
+.mobile-nav a:hover{color:var(--gold);}
+.mobile-overlay{
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);
+  z-index:1999;display:none;
+}
+.mobile-overlay.open{display:block;}
+
+/* ANIMATIONS */
+@keyframes fadeInDown{
+  from{opacity:0;transform:translateY(-20px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes fadeInUp{
+  from{opacity:0;transform:translateY(30px);}
+  to{opacity:1;transform:translateY(0);}
+}
+@keyframes fadeIn{
+  from{opacity:0;}to{opacity:1;}
+}
+.reveal{opacity:0;transform:translateY(30px);transition:all 0.6s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:0 20px;}
+  .nav-links{display:none;}
+  .hamburger{display:flex;}
+  .contact-grid{grid-template-columns:1fr;}
+  .footer-grid{grid-template-columns:1fr 1fr;}
+  .fleet-showcase{grid-template-columns:1fr;}
+  .fleet-item:first-child{grid-column:span 1;}
+  .timing-grid{grid-template-columns:1fr;}
+  .form-row{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  .container{padding:0 20px;}
+  .hero h1{font-size:2.8rem;}
+  .hero-stats{gap:28px;}
+  .footer-grid{grid-template-columns:1fr;}
+  .modal-body{padding:20px;}
+  .modal-wa{flex-direction:column;}
+  .pricing-card.featured::before{display:none;}
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:var(--dark);}
+::-webkit-scrollbar-thumb{background:var(--gold-dark);border-radius:3px;}
+::-webkit-scrollbar-thumb:hover{background:var(--gold);}
+
+/* NUST special timing notice */
+.special-notice{
+  background:rgba(79,195,247,0.08);border:1px solid rgba(79,195,247,0.2);
+  border-radius:8px;padding:12px 16px;
+  font-size:0.75rem;color:var(--sky);margin-top:10px;
+  display:flex;align-items:center;gap:8px;
+}
+
+/* ABOUT SECTION ON HOME */
+.about-split{
+  display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+}
+.about-img-wrap{
+  position:relative;border-radius:16px;overflow:hidden;
+}
+.about-img-wrap img{
+  width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:16px;
+  transition:transform 0.5s;
+}
+.about-img-wrap:hover img{transform:scale(1.03);}
+.about-img-overlay{
+  position:absolute;bottom:20px;left:20px;right:20px;
+  background:rgba(0,0,0,0.75);backdrop-filter:blur(10px);
+  border:1px solid var(--border);border-radius:10px;padding:16px 20px;
+  display:flex;gap:24px;
+}
+.about-overlay-stat{text-align:center;}
+.about-overlay-stat .num{
+  font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold);
+}
+.about-overlay-stat .lbl{font-size:0.6rem;color:var(--gray-light);letter-spacing:1px;}
+.about-list{list-style:none;display:flex;flex-direction:column;gap:12px;margin:20px 0;}
+.about-list li{
+  display:flex;align-items:flex-start;gap:10px;
+  font-size:0.85rem;color:var(--gray-light);line-height:1.6;
+}
+.about-list li i{color:var(--gold);margin-top:2px;flex-shrink:0;}
+
+@media(max-width:900px){
+  .about-split{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ANIMATED BACKGROUND -->
+<div class="bg-canvas">
+  <div class="road-lines"></div>
+</div>
+
+<!-- NAVBAR -->
+<nav id="navbar">
+  <a class="nav-logo" onclick="showPage('home')">
+    <img src="/mnt/user-data/uploads/Eagles_Elite_Transport_Service___Tour_Planners__SMC__Pvt_Ltd__20260602_101233_0000.png" alt="EETS Logo">
+    <div class="nav-logo-text">
+      <span>EETS</span>
+      <span>Eagles Elite Transport</span>
+    </div>
+  </a>
+  <div class="nav-links">
+    <a onclick="showPage('home')" class="active" id="nav-home">Home</a>
+    <a onclick="showPage('routes')" id="nav-routes">Routes & Timings</a>
+    <a onclick="showPage('stations')" id="nav-stations">Pickup Stations</a>
+    <a onclick="showPage('pricing')" id="nav-pricing">Pricing</a>
+    <a onclick="showPage('contact')" id="nav-contact">Contact</a>
+  </div>
+  <div class="nav-actions">
+    <button class="theme-btn" onclick="toggleTheme()" title="Toggle theme">
+      <i class="fas fa-moon" id="theme-icon"></i>
+    </button>
+    <a href="https://wa.me/923225166580" target="_blank" class="wa-btn-nav">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+    <button class="hamburger" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- MOBILE NAV -->
+<div class="mobile-overlay" id="mobileOverlay" onclick="toggleMobileNav()"></div>
+<div class="mobile-nav" id="mobileNav">
+  <a onclick="showPage('home');toggleMobileNav()">🏠 Home</a>
+  <a onclick="showPage('routes');toggleMobileNav()">🗺️ Routes & Timings</a>
+  <a onclick="showPage('stations');toggleMobileNav()">📍 Pickup Stations</a>
+  <a onclick="showPage('pricing');toggleMobileNav()">💰 Pricing</a>
+  <a onclick="showPage('contact');toggleMobileNav()">📞 Contact</a>
+  <a href="https://wa.me/923225166580" target="_blank" style="color:#25D366;margin-top:20px;">
+    <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+  </a>
+</div>
+
+<!-- ===================== HOME PAGE ===================== -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <img src="/mnt/user-data/uploads/Eagles_Elite_Transport_Service___Tour_Planners__SMC__Pvt_Ltd__20260602_101233_0000.png" class="hero-eagle" alt="">
+    <div class="hero-badge">
+      <i class="fas fa-certificate"></i>
+      SECP Registered · License No. 023072 · 7 Years of Excellence
+    </div>
+    <h1>
+      <span class="gold">Eagles</span> Elite<br>
+      <span class="outline">Transport</span><br>
+      Service
+    </h1>
+    <p class="hero-sub">Your Hassle-Free Commute Solution. Reliable, safe & comfortable pick-and-drop services for students, faculty, hospital staff & corporate professionals across Islamabad & Rawalpindi.</p>
+    <div class="hero-ctas">
+      <a class="btn-primary" onclick="showPage('routes')">
+        <i class="fas fa-route"></i> View Routes
+      </a>
+      <a href="https://wa.me/923225166580?text=Hello%20EETS!%20I%20want%20to%20book%20a%20seat." target="_blank" class="btn-outline">
+        <i class="fab fa-whatsapp"></i> Book a Seat
+      </a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">7+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Destinations</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">9</div>
+        <div class="stat-label">Pickup Zones</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">24/7</div>
+        <div class="stat-label">Support</div>
+      </div>
+    </div>
+    <div class="scroll-ind">
+      <div class="scroll-line"></div>
+      <span>SCROLL</span>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section style="padding:80px 0;background:var(--dark2);">
+    <div class="container">
+      <div class="about-split">
+        <div class="about-img-wrap reveal">
+          <img src="https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=700&q=80" alt="EETS Fleet">
+          <div class="about-img-overlay">
+            <div class="about-overlay-stat"><div class="num">500+</div><div class="lbl">Daily Riders</div></div>
+            <div class="about-overlay-stat"><div class="num">99%</div><div class="lbl">On-Time Rate</div></div>
+            <div class="about-overlay-stat"><div class="num">0</div><div class="lbl">Left Behind</div></div>
+          </div>
+        </div>
+        <div class="reveal">
+          <div class="section-label">About EETS</div>
+          <h2 class="section-title">Pakistan's Most <span>Trusted</span> Campus Transport</h2>
+          <div class="divider"></div>
+          <p class="section-desc">Eagles Elite Transport Service (SMC) Pvt Ltd is a SECP-registered company with over 7 years of experience providing premium pick-and-drop services across Islamabad, Rawalpindi, Wah Cantt, and surrounding areas.</p>
+          <ul class="about-list">
+            <li><i class="fas fa-check-circle"></i> Serving Air University, Bahria University, NUST, FAST, NDU, Islamic University and 15+ more institutions</li>
+            <li><i class="fas fa-check-circle"></i> Premium 4C-Saloon Coasters, Toyota Hiaces & Mercedes Vans with AC, WiFi & Multimedia</li>
+            <li><i class="fas fa-check-circle"></i> Live GPS tracking on all vehicles with real-time updates</li>
+            <li><i class="fas fa-check-circle"></i> Multiple arrival & departure timings tailored to each institution's schedule</li>
+            <li><i class="fas fa-check-circle"></i> "No Student Left Behind" policy with immediate alternate transport</li>
+          </ul>
+          <a class="btn-primary" onclick="showPage('contact')">
+            <i class="fas fa-paper-plane"></i> Get In Touch
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY CHOOSE US -->
+  <section>
+    <div class="container">
+      <div class="reveal" style="text-align:center;">
+        <div class="section-label" style="justify-content:center;display:flex;">Why Choose EETS</div>
+        <h2 class="section-title" style="text-align:center;">Elite Rides, <span>Friendly Guides</span></h2>
+        <div class="divider" style="margin:20px auto;"></div>
+      </div>
+      <div class="features-grid">
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <h3>Live GPS Tracking</h3>
+          <p>Real-time location updates shared as soon as the vehicle departs from the first stop. Always know where your transport is.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fas fa-clock"></i></div>
+          <h3>Punctuality First</h3>
+          <p>Multiple arrival and departure timings aligned perfectly with each institution's academic schedule. Every minute counts.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
+          <h3>No One Left Behind</h3>
+          <p>If any passenger is missed due to a technical issue, we immediately provide an alternate transport solution at no extra cost.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fas fa-headset"></i></div>
+          <h3>24/7 Management</h3>
+          <p>Our admin team is available around the clock via WhatsApp. Day or night, we're always here for you.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fas fa-snowflake"></i></div>
+          <h3>Luxury Fleet</h3>
+          <p>Premium 4C-Saloon Coasters, Toyota Hiaces & Mercedes Vans with AC/Heaters, WiFi and multimedia entertainment.</p>
+        </div>
+        <div class="feature-card reveal">
+          <div class="feature-icon"><i class="fas fa-gift"></i></div>
+          <h3>Free Annual Trip</h3>
+          <p>Complimentary annual trip for all registered passengers. Saturday free rides for selected institute students.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLEET SHOWCASE -->
+  <section style="background:var(--dark2);padding:80px 0;">
+    <div class="container">
+      <div class="reveal">
+        <div class="section-label">Our Fleet</div>
+        <h2 class="section-title">Top-Notch <span>Vehicles</span></h2>
+        <div class="divider"></div>
+      </div>
+      <div class="fleet-showcase reveal">
+        <div class="fleet-item">
+          <img src="https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=900&q=80" alt="Coaster Bus">
+          <div class="fleet-item-overlay">
+            <h4>4C-Saloon Coasters</h4>
+            <p>Premium air-conditioned coaches with multimedia</p>
+          </div>
+        </div>
+        <div class="fleet-item">
+          <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500&q=80" alt="Toyota Hiace">
+          <div class="fleet-item-overlay">
+            <h4>Toyota Hiace</h4>
+            <p>Up-model vans with AC & WiFi</p>
+          </div>
+        </div>
+        <div class="fleet-item">
+          <img src="https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=500&q=80" alt="Mercedes Van">
+          <div class="fleet-item-overlay">
+            <h4>Mercedes Vans</h4>
+            <p>Luxury travel with comfort seating</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK ROUTES PREVIEW -->
+  <section>
+    <div class="container">
+      <div class="reveal" style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:16px;">
+        <div>
+          <div class="section-label">Destinations</div>
+          <h2 class="section-title">Popular <span>Routes</span></h2>
+          <div class="divider"></div>
+        </div>
+        <a class="btn-outline" onclick="showPage('routes')" style="margin-bottom:20px;">View All Routes <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="routes-grid">
+        <div class="route-card reveal" onclick="openModal('air-university')">
+          <img class="route-card-img" src="https://images.unsplash.com/photo-1562774053-701939374585?w=500&q=80" alt="Air University">
+          <div class="route-card-body">
+            <span class="route-badge">E-9 Sector</span>
+            <h3>Air University</h3>
+            <p>Reliable transport for AU students & faculty from Wah Cantt, B17, D17 & all major pickup zones.</p>
+            <div class="route-meta">
+              <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals Daily</div>
+              <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+              <div class="route-meta-item"><i class="fas fa-map-marker-alt"></i> ~50 min</div>
+            </div>
+            <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+          </div>
+        </div>
+        <div class="route-card reveal" onclick="openModal('bahria-university')">
+          <img class="route-card-img" src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=500&q=80" alt="Bahria University">
+          <div class="route-card-body">
+            <span class="route-badge">E-9 Sector</span>
+            <h3>Bahria University</h3>
+            <p>Timely transport for BU students with Sat/Sun exam facilitation and multiple departure slots.</p>
+            <div class="route-meta">
+              <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals Daily</div>
+              <div class="route-meta-item"><i class="fas fa-calendar"></i> Exam Days Covered</div>
+              <div class="route-meta-item"><i class="fas fa-map-marker-alt"></i> ~50 min</div>
+            </div>
+            <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+          </div>
+        </div>
+        <div class="route-card reveal" onclick="openModal('nust')">
+          <img class="route-card-img" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&q=80" alt="NUST">
+          <div class="route-card-body">
+            <span class="route-badge h11">H-12 Sector</span>
+            <h3>NUST University</h3>
+            <p>Dedicated service for NUST H12 students with specialized timing schedule per NUST academic calendar.</p>
+            <div class="route-meta">
+              <div class="route-meta-item"><i class="fas fa-clock"></i> 4 Arrivals Daily</div>
+              <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Available</div>
+              <div class="route-meta-item"><i class="fas fa-map-marker-alt"></i> ~50 min</div>
+            </div>
+            <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA BANNER -->
+  <section style="background:linear-gradient(135deg,var(--gold-dark),var(--gold));padding:70px 0;">
+    <div class="container" style="text-align:center;">
+      <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,5vw,3.5rem);color:#000;letter-spacing:2px;">
+        Ready to Ride Elite?
+      </h2>
+      <p style="color:rgba(0,0,0,0.7);font-size:0.95rem;margin:16px auto;max-width:500px;line-height:1.7;">
+        Reserve your seat today and experience the most comfortable campus commute in the region.
+      </p>
+      <div style="display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
+        <a href="https://wa.me/923225166580?text=Hi!%20I%20want%20to%20reserve%20a%20seat%20with%20EETS." target="_blank"
+           style="background:#000;color:#FFD166;border:none;cursor:pointer;padding:14px 32px;border-radius:4px;font-size:0.85rem;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:all 0.25s;">
+          <i class="fab fa-whatsapp"></i> Reserve via WhatsApp
+        </a>
+        <a onclick="showPage('pricing')"
+           style="background:transparent;color:#000;border:2px solid rgba(0,0,0,0.4);cursor:pointer;padding:14px 32px;border-radius:4px;font-size:0.85rem;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;display:inline-flex;align-items:center;gap:8px;text-decoration:none;transition:all 0.25s;">
+          View Pricing
+        </a>
+      </div>
+    </div>
+  </section>
+
+</div><!-- end home page -->
+
+<!-- ===================== ROUTES PAGE ===================== -->
+<div id="page-routes" class="page">
+  <div class="routes-hero">
+    <div class="container">
+      <div class="section-label">All Destinations</div>
+      <h1 class="section-title">Routes & <span>Timings</span></h1>
+      <div class="divider"></div>
+      <p class="section-desc">Click any card to view detailed timings, fee structure, and WhatsApp booking options.</p>
+      <div class="routes-filter">
+        <button class="filter-btn active" onclick="filterRoutes('all',this)">All Routes</button>
+        <button class="filter-btn" onclick="filterRoutes('e9',this)">E-8/E-9 Sector</button>
+        <button class="filter-btn" onclick="filterRoutes('h11',this)">H-11 Sector</button>
+        <button class="filter-btn" onclick="filterRoutes('h12',this)">H-12/H-13</button>
+        <button class="filter-btn" onclick="filterRoutes('f8',this)">F-8 Sector</button>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="routes-grid" id="routesGrid">
+
+      <!-- E-9 ROUTES -->
+      <div class="route-card" data-sector="e9" onclick="openModal('air-university')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1562774053-701939374585?w=500&q=80" alt="Air University">
+        <div class="route-card-body">
+          <span class="route-badge">E-9 Sector</span>
+          <h3>Air University (E-9)</h3>
+          <p>Complete pick & drop for AU E-9 campus students and faculty with multiple timings.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-calendar-check"></i> Sat/Sun Exam</div>
+          </div>
+          <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="e9" onclick="openModal('bahria-e9')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=500&q=80" alt="Bahria University">
+        <div class="route-card-body">
+          <span class="route-badge">E-9 Sector</span>
+          <h3>Bahria University (E-9)</h3>
+          <p>Reliable service for Bahria University E-9 campus with exam facilitation.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-calendar-check"></i> Sat/Sun Exam</div>
+          </div>
+          <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="e9" onclick="openModal('ndu')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=500&q=80" alt="NDU">
+        <div class="route-card-body">
+          <span class="route-badge">E-9 Sector</span>
+          <h3>National Defence University</h3>
+          <p>Dedicated transport for NDU students with semester-aligned schedule.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-calendar-check"></i> Sat/Sun Exam</div>
+          </div>
+          <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="e9" onclick="openModal('ahq')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1569163139394-de4e4f43e4e3?w=500&q=80" alt="AHQ">
+        <div class="route-card-body">
+          <span class="route-badge">E-9 Sector</span>
+          <h3>Air Force Headquarters (AHQ)</h3>
+          <p>Professional transport for AHQ staff as per AHQ academic & duty calendar.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Saturday Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="e9" onclick="openModal('paf')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=500&q=80" alt="PAF Hospital">
+        <div class="route-card-body">
+          <span class="route-badge">E-9 Sector</span>
+          <h3>PAF Hospital</h3>
+          <p>Comfortable transport for PAF Hospital staff with timings per PAF schedule.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Saturday Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="e9" onclick="openModal('dci')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=500&q=80" alt="DCI">
+        <div class="route-card-body">
+          <span class="route-badge">F-10 Sector</span>
+          <h3>DCI Gate (F-10)</h3>
+          <p>Transport for DCI F-10 members as per DCI academic calendar.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Saturday Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <!-- F-8 ROUTES -->
+      <div class="route-card" data-sector="f8" onclick="openModal('skans')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=500&q=80" alt="SKANS">
+        <div class="route-card-body">
+          <span class="route-badge">F-8 Sector</span>
+          <h3>SKANS School of Accountancy</h3>
+          <p>Specialized transport for SKANS students with Saturday free ride concession.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Sat Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="f8" onclick="openModal('cpe')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?w=500&q=80" alt="CPE">
+        <div class="route-card-body">
+          <span class="route-badge">F-8 Sector</span>
+          <h3>CPE Islamabad</h3>
+          <p>Centre for Professional Excellence students — Saturday transport free of charge.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Sat Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="f8" onclick="openModal('mannabi')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500&q=80" alt="Mannabi">
+        <div class="route-card-body">
+          <span class="route-badge">F-8 Sector</span>
+          <h3>Mannabi Business School</h3>
+          <p>Transport for Mannabi students with Saturday free ride as special concession.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Sat Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="f8" onclick="openModal('rise')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=500&q=80" alt="RISE">
+        <div class="route-card-body">
+          <span class="route-badge">F-8 Sector</span>
+          <h3>RISE Institute</h3>
+          <p>RISE students benefit from Saturday free transport as a special concession from EETS.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Sat Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 12,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <!-- H-11 ROUTES -->
+      <div class="route-card" data-sector="h11" onclick="openModal('au-h11')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1562774053-701939374585?w=500&q=80" alt="Air University H11">
+        <div class="route-card-body">
+          <span class="route-badge h11">H-11 Sector</span>
+          <h3>Air University (H-11)</h3>
+          <p>H-11 campus service for AU students with Sat/Sun exam facilitation.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-calendar-check"></i> Sat/Sun Exam</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="h11" onclick="openModal('bu-h11')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=500&q=80" alt="Bahria H11">
+        <div class="route-card-body">
+          <span class="route-badge h11">H-11 Sector</span>
+          <h3>Bahria University (H-11)</h3>
+          <p>Bahria University H-11 campus transport with exam facilitation.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-calendar-check"></i> Sat/Sun Exam</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="h11" onclick="openModal('fast-h11')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1497366412874-3415097a27e7?w=500&q=80" alt="FAST H11">
+        <div class="route-card-body">
+          <span class="route-badge h11">H-11 Sector</span>
+          <h3>FAST NUCES (H-11)</h3>
+          <p>FAST University H-11 campus service with flexible seating plan.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-calendar-check"></i> Sat/Sun Exam</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="h11" onclick="openModal('tmuc')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500&q=80" alt="TMUC">
+        <div class="route-card-body">
+          <span class="route-badge h11">H-11 Sector</span>
+          <h3>The Millennium Universal College</h3>
+          <p>TMUC students enjoy Saturday free transport as a special EETS concession.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Sat Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="h11" onclick="openModal('islamic')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=500&q=80" alt="Islamic University">
+        <div class="route-card-body">
+          <span class="route-badge h11">H-11 Sector</span>
+          <h3>International Islamic University</h3>
+          <p>Comprehensive transport for IIU students with exam-period coverage.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-calendar-check"></i> Sat/Sun Exam</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="h11" onclick="openModal('alhuda')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=500&q=80" alt="Al Huda">
+        <div class="route-card-body">
+          <span class="route-badge h11">H-11 Sector</span>
+          <h3>Al Huda International</h3>
+          <p>Transport for Al Huda faculty & students with Saturday free ride.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Sat Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="h11" onclick="openModal('beaconhouse')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?w=500&q=80" alt="Beaconhouse">
+        <div class="route-card-body">
+          <span class="route-badge h11">H-11 Sector</span>
+          <h3>Beaconhouse School System</h3>
+          <p>Safe & reliable transport for Beaconhouse staff & students.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Sat Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="h11" onclick="openModal('futureworld')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=500&q=80" alt="Future World">
+        <div class="route-card-body">
+          <span class="route-badge h11">H-11 Sector</span>
+          <h3>Future World School & College</h3>
+          <p>Transport for Future World students with Saturday free ride.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Sat Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="h11" onclick="openModal('ibnesina')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=500&q=80" alt="Ibn e Sina">
+        <div class="route-card-body">
+          <span class="route-badge h11">H-11 Sector</span>
+          <h3>Ibn e Sina Institute</h3>
+          <p>Medical institute transport with Saturday free ride concession.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Sat Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <div class="route-card" data-sector="h11" onclick="openModal('paec')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=500&q=80" alt="PAEC Hospital">
+        <div class="route-card-body">
+          <span class="route-badge h11">H-11 Sector</span>
+          <h3>PAEC General Hospital</h3>
+          <p>Transport for PAEC Hospital H11 staff with Saturday ride availability.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 5 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Saturday Ride</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+      <!-- H-12 -->
+      <div class="route-card" data-sector="h12" onclick="openModal('nust')">
+        <img class="route-card-img" src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=500&q=80" alt="NUST H12">
+        <div class="route-card-body">
+          <span class="route-badge" style="background:rgba(231,76,60,0.15);color:#E74C3C;">H-12 Sector</span>
+          <h3>NUST University (H-12)</h3>
+          <p>NUST H12 — all departments covered with unique timing schedule per NUST calendar.</p>
+          <div class="route-meta">
+            <div class="route-meta-item"><i class="fas fa-clock"></i> 4 Arrivals</div>
+            <div class="route-meta-item"><i class="fas fa-moon"></i> Evening Shift</div>
+            <div class="route-meta-item"><i class="fas fa-star"></i> Sat Free Ride</div>
+          </div>
+          <div class="route-fee">Rs. 11,000 <span>/ month</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PICKUP STATIONS PAGE ===================== -->
+<div id="page-stations" class="page">
+  <div class="stations-hero">
+    <div class="container">
+      <div class="section-label">Coverage Areas</div>
+      <h1 class="section-title">Pickup <span>Stations</span></h1>
+      <div class="divider"></div>
+      <p class="section-desc">We cover 9 major zones with dedicated fleets. Live location updates shared when the van departs from the first stop.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="stations-grid">
+
+      <div class="station-card">
+        <div class="station-header">
+          <div class="station-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><h3>Hassan Abdal</h3><p>9 Pickup Points</p></div>
+        </div>
+        <div class="station-stops">
+          <div class="stop-item"><div class="stop-dot"></div>Hazara Road</div>
+          <div class="stop-item"><div class="stop-dot"></div>Akbar Shinwari</div>
+          <div class="stop-item"><div class="stop-dot"></div>Yum Bakers</div>
+          <div class="stop-item"><div class="stop-dot"></div>Khawaja Nagar</div>
+          <div class="stop-item"><div class="stop-dot"></div>Panja Stop</div>
+          <div class="stop-item"><div class="stop-dot"></div>Abbotabad Morh</div>
+          <div class="stop-item"><div class="stop-dot"></div>Rescue 1122</div>
+          <div class="stop-item"><div class="stop-dot"></div>Price Cafe & Zaman Pump</div>
+          <div class="stop-item"><div class="stop-dot"></div>Cement Company Morh</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="station-header">
+          <div class="station-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><h3>Gudwal / 26 Area</h3><p>12 Pickup Points</p></div>
+        </div>
+        <div class="station-stops">
+          <div class="stop-item"><div class="stop-dot"></div>Mohra Chowk</div>
+          <div class="stop-item"><div class="stop-dot"></div>Ayesha Marriage Hall</div>
+          <div class="stop-item"><div class="stop-dot"></div>Bohti Morh</div>
+          <div class="stop-item"><div class="stop-dot"></div>Askari Chowk Gudwal</div>
+          <div class="stop-item"><div class="stop-dot"></div>Sabza Sar Stop</div>
+          <div class="stop-item"><div class="stop-dot"></div>27 Area Stop</div>
+          <div class="stop-item"><div class="stop-dot"></div>Madina Town</div>
+          <div class="stop-item"><div class="stop-dot"></div>Shadman Town</div>
+          <div class="stop-item"><div class="stop-dot"></div>Qaiser Kiryana Store</div>
+          <div class="stop-item"><div class="stop-dot"></div>St. Paul School</div>
+          <div class="stop-item"><div class="stop-dot"></div>Grid Station Tariq Road</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="station-header">
+          <div class="station-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><h3>Wah Cantt</h3><p>25+ Pickup Points</p></div>
+        </div>
+        <div class="station-stops">
+          <div class="stop-item"><div class="stop-dot"></div>Noori Hospital</div>
+          <div class="stop-item"><div class="stop-dot"></div>Uppal Chowk</div>
+          <div class="stop-item"><div class="stop-dot"></div>Basti Chowk</div>
+          <div class="stop-item"><div class="stop-dot"></div>Al Faisal Road</div>
+          <div class="stop-item"><div class="stop-dot"></div>Lines 11, 12, 13 & 18–20</div>
+          <div class="stop-item"><div class="stop-dot"></div>Officers Colony</div>
+          <div class="stop-item"><div class="stop-dot"></div>Masjid Taqwa & Filter Plant</div>
+          <div class="stop-item"><div class="stop-dot"></div>CB School</div>
+          <div class="stop-item"><div class="stop-dot"></div>POF Guest House</div>
+          <div class="stop-item"><div class="stop-dot"></div>Chairman Colony</div>
+          <div class="stop-item"><div class="stop-dot"></div>Jinnah Park Wahcantt</div>
+          <div class="stop-item"><div class="stop-dot"></div>FG Degree College Stop</div>
+          <div class="stop-item"><div class="stop-dot"></div>POF Hospital</div>
+          <div class="stop-item"><div class="stop-dot"></div>Token Office Wahcantt</div>
+          <div class="stop-item"><div class="stop-dot"></div>Comsats Wah Campus Stop</div>
+          <div class="stop-item"><div class="stop-dot"></div>Barier 1 Wahcantt</div>
+          <div class="stop-item"><div class="stop-dot"></div>Taxila Chowk</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="station-header">
+          <div class="station-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><h3>Wah Model Town</h3><p>3 Pickup Points</p></div>
+        </div>
+        <div class="station-stops">
+          <div class="stop-item"><div class="stop-dot"></div>Cheezious Stop</div>
+          <div class="stop-item"><div class="stop-dot"></div>Binsaif Mall</div>
+          <div class="stop-item"><div class="stop-dot"></div>Diamond Tiles</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="station-header">
+          <div class="station-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><h3>New City Phase 2</h3><p>8 Pickup Points</p></div>
+        </div>
+        <div class="station-stops">
+          <div class="stop-item"><div class="stop-dot"></div>Tandoori Restaurant</div>
+          <div class="stop-item"><div class="stop-dot"></div>A-Block</div>
+          <div class="stop-item"><div class="stop-dot"></div>B-Block</div>
+          <div class="stop-item"><div class="stop-dot"></div>D-Block</div>
+          <div class="stop-item"><div class="stop-dot"></div>E-Block</div>
+          <div class="stop-item"><div class="stop-dot"></div>F-Block</div>
+          <div class="stop-item"><div class="stop-dot"></div>M-Block</div>
+          <div class="stop-item"><div class="stop-dot"></div>Arcade Chowk Jamia Masjid</div>
+          <div class="stop-item"><div class="stop-dot"></div>Ring Chowk</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="station-header">
+          <div class="station-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><h3>B-17 Multigardens</h3><p>10+ Pickup Points</p></div>
+        </div>
+        <div class="station-stops">
+          <div class="stop-item"><div class="stop-dot"></div>Enter via B17 Gate 2</div>
+          <div class="stop-item"><div class="stop-dot"></div>Mian Akhtar Avenue</div>
+          <div class="stop-item"><div class="stop-dot"></div>House Chowk</div>
+          <div class="stop-item"><div class="stop-dot"></div>MR-11 Start & All Stations</div>
+          <div class="stop-item"><div class="stop-dot"></div>Umer Farooq Masjid Chowk</div>
+          <div class="stop-item"><div class="stop-dot"></div>MR-8 Street</div>
+          <div class="stop-item"><div class="stop-dot"></div>Football Ground</div>
+          <div class="stop-item"><div class="stop-dot"></div>Fawara Chowk</div>
+          <div class="stop-item"><div class="stop-dot"></div>Safa Cafe Road</div>
+          <div class="stop-item"><div class="stop-dot"></div>Exit B17 Gate 1</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="station-header">
+          <div class="station-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><h3>D-17 Society</h3><p>5 Pickup Points</p></div>
+        </div>
+        <div class="station-stops">
+          <div class="stop-item"><div class="stop-dot"></div>Sangjani Stop</div>
+          <div class="stop-item"><div class="stop-dot"></div>D17 Gate Entrance</div>
+          <div class="stop-item"><div class="stop-dot"></div>Road A Main</div>
+          <div class="stop-item"><div class="stop-dot"></div>D17 Markaz</div>
+          <div class="stop-item"><div class="stop-dot"></div>D17/2 Ground</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="station-header">
+          <div class="station-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><h3>GT Road / Taxila</h3><p>Key Stops</p></div>
+        </div>
+        <div class="station-stops">
+          <div class="stop-item"><div class="stop-dot"></div>Main GT Road Wah Cantt</div>
+          <div class="stop-item"><div class="stop-dot"></div>Taxila Chowk</div>
+          <div class="stop-item"><div class="stop-dot"></div>Kohistan Enclave</div>
+          <div class="stop-item"><div class="stop-dot"></div>AWC EHS Housing Society</div>
+        </div>
+      </div>
+
+      <div class="station-card">
+        <div class="station-header">
+          <div class="station-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><h3>E-16 / Tarnol / G-15</h3><p>Key Stops</p></div>
+        </div>
+        <div class="station-stops">
+          <div class="stop-item"><div class="stop-dot"></div>E16 / Sarah e Kharboza</div>
+          <div class="stop-item"><div class="stop-dot"></div>Tarnol Stop</div>
+          <div class="stop-item"><div class="stop-dot"></div>G15 Society</div>
+          <div class="stop-item"><div class="stop-dot"></div>26 No Chongi Stop</div>
+          <div class="stop-item"><div class="stop-dot"></div>G13/G14 Metro Station Stop</div>
+          <div class="stop-item"><div class="stop-dot"></div>NUST Gate 2 McDonald's Stop</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== PRICING PAGE ===================== -->
+<div id="page-pricing" class="page">
+  <div class="pricing-hero">
+    <div class="container">
+      <div class="section-label">Transparent Pricing</div>
+      <h1 class="section-title">Fee <span>Structure</span></h1>
+      <div class="divider"></div>
+      <p class="section-desc">Simple, transparent pricing with no hidden charges. Fees are based on 22 working days per month.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="pricing-grid">
+      <div class="pricing-card featured">
+        <div class="pricing-name">E-8 / E-9 / F-8 / F-10 Routes</div>
+        <div class="pricing-route">Standard Monthly Plan</div>
+        <div class="pricing-amount"><sup>Rs.</sup>12,000<sub>/month</sub></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check-circle"></i> Air University E-9 & H-11</li>
+          <li><i class="fas fa-check-circle"></i> Bahria University E-9</li>
+          <li><i class="fas fa-check-circle"></i> NDU, AHQ, PAF Hospital, DCI</li>
+          <li><i class="fas fa-check-circle"></i> SKANS, CPE, Mannabi, RISE (F-8)</li>
+          <li><i class="fas fa-check-circle"></i> Live Tracking + Multimedia</li>
+          <li><i class="fas fa-check-circle"></i> Free Annual Trip</li>
+          <li><i class="fas fa-check-circle"></i> Saturday free ride (selected institutes)</li>
+          <li><i class="fas fa-check-circle"></i> Evening shift available</li>
+        </ul>
+        <div class="pricing-note">AC charges Rs. 500 extra (April–August). Fee adjusted based on fuel price (Rs.272 petrol). Advance payment required.</div>
+        <a href="https://wa.me/923225166580?text=Hi!%20I%20want%20to%20book%20the%20Standard%20Plan%20(Rs.12,000)." target="_blank" class="btn-primary" style="width:100%;justify-content:center;margin-top:16px;">
+          <i class="fab fa-whatsapp"></i> Book This Plan
+        </a>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-name">H-11 / H-12 / H-13 Routes</div>
+        <div class="pricing-route">H-Sector Monthly Plan</div>
+        <div class="pricing-amount"><sup>Rs.</sup>11,000<sub>/month</sub></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check-circle"></i> Bahria University H-11</li>
+          <li><i class="fas fa-check-circle"></i> FAST NUCES H-11</li>
+          <li><i class="fas fa-check-circle"></i> TMUC, Islamic University H-11</li>
+          <li><i class="fas fa-check-circle"></i> Al Huda, Beaconhouse, Future World</li>
+          <li><i class="fas fa-check-circle"></i> Ibn e Sina, PAEC Hospital H-11</li>
+          <li><i class="fas fa-check-circle"></i> NUST H-12 (All Departments)</li>
+          <li><i class="fas fa-check-circle"></i> Live Tracking + Multimedia</li>
+          <li><i class="fas fa-check-circle"></i> Free Annual Trip</li>
+        </ul>
+        <div class="pricing-note">AC charges Rs. 500 extra (April–August). Fee adjusted based on fuel price. Advance payment required.</div>
+        <a href="https://wa.me/923135018125?text=Hi!%20I%20want%20to%20book%20the%20H-Sector%20Plan%20(Rs.11,000)." target="_blank" class="btn-primary" style="width:100%;justify-content:center;margin-top:16px;background:linear-gradient(135deg,#4FC3F7,#0277BD);color:#fff;">
+          <i class="fab fa-whatsapp"></i> Book This Plan
+        </a>
+      </div>
+
+      <div class="pricing-card">
+        <div class="pricing-name">Seat Reservation</div>
+        <div class="pricing-route">One-Time Registration</div>
+        <div class="pricing-amount"><sup>Rs.</sup>1,000<sub>one-time</sub></div>
+        <ul class="pricing-features">
+          <li><i class="fas fa-check-circle"></i> Confirms your seat reservation</li>
+          <li><i class="fas fa-check-circle"></i> Adjusted in first monthly fare</li>
+          <li><i class="fas fa-check-circle"></i> Submit via EasyPaisa or bank transfer</li>
+          <li><i class="fas fa-check-circle"></i> Instant WhatsApp confirmation</li>
+        </ul>
+        <div class="pricing-note">Send payment slip with your name & route details on WhatsApp to M. Hammad: 0322-5166580 or Engr. Waleed: 0313-5018125</div>
+        <a href="https://wa.me/923225166580?text=Hi!%20I%20want%20to%20reserve%20a%20seat%20and%20pay%20the%20Rs.1000%20reservation%20fee." target="_blank" class="btn-primary" style="width:100%;justify-content:center;margin-top:16px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;">
+          <i class="fab fa-whatsapp"></i> Reserve Now
+        </a>
+      </div>
+    </div>
+
+    <!-- PAYMENT METHODS -->
+    <div class="payment-section reveal">
+      <div class="section-label">Payment Methods</div>
+      <h2 class="section-title" style="font-size:1.8rem;">How to <span>Pay</span></h2>
+      <div class="payment-grid">
+        <div class="payment-card">
+          <h4><i class="fas fa-building"></i> Cash Payment</h4>
+          <p>EETS Office No. 01, Opposite J., Main GT Road, Barrier 3, Wah Cantt<br><br>Also accepted on Coaster/Van premises.</p>
+        </div>
+        <div class="payment-card">
+          <h4><i class="fas fa-university"></i> Meezan Bank (Waleed)</h4>
+          <p>A/c: 03180109364171<br>IBAN: PK86MEZN0003180109364171<br>Title: Waleed Hamza</p>
+        </div>
+        <div class="payment-card">
+          <h4><i class="fas fa-university"></i> Meezan Bank (Hammad)</h4>
+          <p>A/c: 00300110687768<br>Title: Muhammad Hammad<br>Online transfer available.</p>
+        </div>
+        <div class="payment-card">
+          <h4><i class="fas fa-mobile-alt"></i> EasyPaisa</h4>
+          <p>0313-5018125 (Waleed Hamza)<br>0322-5166580 (M. Hammad)<br><br>Share slip on WhatsApp after payment.</p>
+        </div>
+      </div>
+      <div style="background:rgba(245,166,35,0.08);border:1px solid rgba(245,166,35,0.2);border-radius:10px;padding:16px 20px;margin-top:20px;font-size:0.82rem;color:var(--gray-light);line-height:1.8;">
+        <strong style="color:var(--gold);">⚠️ Important Notes:</strong> Fee deadline is the <strong>10th of every month</strong>. Late payment fine: Rs. 200/day. Always share payment slip on WhatsApp with your name & route. To discontinue, inform admin at least <strong>10 days before</strong> next month.
+      </div>
+    </div>
+
+    <!-- TERMS ACCORDION -->
+    <div class="terms-section reveal">
+      <div class="section-label">Policies</div>
+      <h2 class="section-title" style="font-size:1.8rem;">Terms & <span>Conditions</span></h2>
+      <div class="divider"></div>
+      <br>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h4>📋 Seat Registration & Cancellation</h4>
+          <i class="fas fa-plus accordion-icon"></i>
+        </div>
+        <div class="accordion-body">
+          A seat reservation fee of Rs. 1,000 is required to confirm your booking. This amount will be adjusted in your monthly fare and can be submitted via EasyPaisa or bank transfer.<br><br>
+          Passengers wishing to discontinue must inform admin at least <strong>10 days in advance</strong>. Failure to do so will result in the full fare being charged for that month.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h4>⛽ Fuel Policy & AC Charges</h4>
+          <i class="fas fa-plus accordion-icon"></i>
+        </div>
+        <div class="accordion-body">
+          An additional Rs. 500 will be charged for air conditioning during summer season (tentatively April–August). Monthly fare may increase or decrease based on current fuel prices (currently Rs. 272.15 petrol / Rs. 284.35 diesel).
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h4>💰 Fixed Monthly Fee Policy</h4>
+          <i class="fas fa-plus accordion-icon"></i>
+        </div>
+        <div class="accordion-body">
+          The fee structure is based on 22 working days and is <strong>fixed per reserved seat</strong>. The same fee applies even if you use the service for fewer days. Extra days (Saturday/Sunday) are charged separately on a per-day basis. During exam periods, the full monthly fee applies regardless of individual exam days.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h4>🚐 Missed Van Due to Driver's Negligence</h4>
+          <i class="fas fa-plus accordion-icon"></i>
+        </div>
+        <div class="accordion-body">
+          If a van is missed due to the driver's fault, contact EETS Admin on WhatsApp immediately. If EETS is found responsible, an alternative travel arrangement will be provided at <strong>no additional cost</strong>.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h4>🏛️ Government Holidays & Service Disruptions</h4>
+          <i class="fas fa-plus accordion-icon"></i>
+        </div>
+        <div class="accordion-body">
+          The van is unavailable on government holidays and payments for these days are non-refundable. Services may be delayed, rescheduled, or cancelled due to extreme weather, strikes, or government restrictions. Passengers will be notified as soon as possible.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h4>🚫 Passenger Conduct</h4>
+          <i class="fas fa-plus accordion-icon"></i>
+        </div>
+        <div class="accordion-body">
+          Smoking, drinking, or any illegal activities inside the vehicle are strictly prohibited. Passengers must show respect to drivers, staff, and fellow travelers at all times. Any damage caused to the vehicle by a passenger will be charged accordingly.
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <div class="accordion-header" onclick="toggleAccordion(this)">
+          <h4>📝 Discontinuation Policy</h4>
+          <i class="fas fa-plus accordion-icon"></i>
+        </div>
+        <div class="accordion-body">
+          Members may discontinue the service for genuine personal reasons. However, discontinuation based on invalid excuses will require payment of the full month's fee. If a member has legitimate concerns about service quality, they must notify EETS management first. Should EETS fail to resolve concerns, the member may discontinue without penalty.
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CONTACT PAGE ===================== -->
+<div id="page-contact" class="page">
+  <div class="contact-hero">
+    <div class="container">
+      <div class="section-label">Get In Touch</div>
+      <h1 class="section-title">Contact <span>Us</span></h1>
+      <div class="divider"></div>
+      <p class="section-desc">We're available 24/7. Reach out via WhatsApp, phone, or email for booking, queries, or support.</p>
+    </div>
+  </div>
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info">
+
+        <div class="wa-panel">
+          <h3><i class="fab fa-whatsapp"></i> WhatsApp Us</h3>
+          <p>The fastest way to reach us! Book a seat, ask about routes, or get support instantly.</p>
+          <div class="wa-contacts">
+            <div class="wa-person">
+              <div class="wa-person-info">
+                <h4>Muhammad Hammad Ahmed</h4>
+                <p>Founder & CEO · 0322-5166580</p>
+              </div>
+              <a href="https://wa.me/923225166580?text=Hello%20EETS!%20I%20have%20a%20query." target="_blank" class="wa-person-btn">
+                <i class="fab fa-whatsapp"></i> Chat Now
+              </a>
+            </div>
+            <div class="wa-person">
+              <div class="wa-person-info">
+                <h4>Engr. Waleed Hamza</h4>
+                <p>Managing Director · 0313-5018125</p>
+              </div>
+              <a href="https://wa.me/923135018125?text=Hello%20EETS!%20I%20have%20a%20query." target="_blank" class="wa-person-btn">
+                <i class="fab fa-whatsapp"></i> Chat Now
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <div class="contact-card-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <h3>Office Address</h3>
+          </div>
+          <p>EETS Office No. 01, Opposite to J., Main GT Road, Barrier 03, Wah Cantt, 47010, Pakistan</p>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <div class="contact-card-icon"><i class="fas fa-envelope"></i></div>
+            <h3>Email</h3>
+          </div>
+          <p><a href="mailto:eagleselitepk@gmail.com">eagleselitepk@gmail.com</a></p>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <div class="contact-card-icon"><i class="fab fa-instagram"></i></div>
+            <h3>Instagram</h3>
+          </div>
+          <p><a href="https://instagram.com/eagleselitepk" target="_blank">@eagleselitepk</a></p>
+        </div>
+
+        <div class="contact-card">
+          <div class="contact-card-header">
+            <div class="contact-card-icon"><i class="fas fa-clock"></i></div>
+            <h3>Availability</h3>
+          </div>
+          <p>We are available <strong style="color:var(--gold);">24/7</strong> via WhatsApp. Office hours: Mon–Sat, 8AM–8PM.</p>
+        </div>
+
+      </div>
+
+      <div class="contact-form">
+        <h3>Send a Message</h3>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Your Name *</label>
+            <input type="text" placeholder="Muhammad Ali">
+          </div>
+          <div class="form-group">
+            <label>Phone Number *</label>
+            <input type="tel" placeholder="0300-0000000">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="you@example.com">
+        </div>
+        <div class="form-group">
+          <label>Select Your Institution / Route *</label>
+          <select>
+            <option value="">-- Choose your destination --</option>
+            <optgroup label="E-9 / E-8 Sector">
+              <option>Air University (E-9)</option>
+              <option>Bahria University (E-9)</option>
+              <option>National Defence University (NDU)</option>
+              <option>Air Force Headquarters (AHQ)</option>
+              <option>PAF Hospital</option>
+              <option>DCI Gate (F-10)</option>
+            </optgroup>
+            <optgroup label="F-8 Sector">
+              <option>SKANS School of Accountancy</option>
+              <option>CPE Islamabad</option>
+              <option>Mannabi Business School</option>
+              <option>RISE Institute</option>
+            </optgroup>
+            <optgroup label="H-11 Sector">
+              <option>Air University (H-11)</option>
+              <option>Bahria University (H-11)</option>
+              <option>FAST NUCES (H-11)</option>
+              <option>TMUC (H-11)</option>
+              <option>International Islamic University</option>
+              <option>Al Huda International</option>
+              <option>Beaconhouse (H-11)</option>
+              <option>Future World College</option>
+              <option>Ibn e Sina Institute</option>
+              <option>PAEC Hospital (H-11)</option>
+            </optgroup>
+            <optgroup label="H-12 / H-13">
+              <option>NUST (H-12)</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Pickup Area *</label>
+          <select>
+            <option value="">-- Select your area --</option>
+            <option>Hassan Abdal</option>
+            <option>Gudwal / 26 Area</option>
+            <option>Wah Cantt</option>
+            <option>Wah Model Town</option>
+            <option>New City Phase 2</option>
+            <option>B-17 Multigardens</option>
+            <option>D-17 Society</option>
+            <option>GT Road / Taxila</option>
+            <option>E-16 / Tarnol / G-15</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Message / Query</label>
+          <textarea placeholder="Write your message, query, or booking request here..."></textarea>
+        </div>
+        <a href="https://wa.me/923225166580?text=Hello%20EETS!%20I%20filled%20your%20contact%20form%20and%20want%20to%20inquire%20about%20your%20pick%20%26%20drop%20services." target="_blank" class="btn-primary" style="width:100%;justify-content:center;">
+          <i class="fab fa-whatsapp"></i> Send via WhatsApp
+        </a>
+        <p style="font-size:0.7rem;color:var(--gray);text-align:center;margin-top:10px;">Clicking above will open WhatsApp with your enquiry.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="/mnt/user-data/uploads/Eagles_Elite_Transport_Service___Tour_Planners__SMC__Pvt_Ltd__20260602_101233_0000.png" alt="EETS Logo">
+        <p>Eagles Elite Transport Service (SMC) Pvt Ltd — Pakistan's trusted campus & corporate commute solution since 7+ years. SECP registered, License No. 023072.</p>
+        <p style="margin-top:10px;font-size:0.72rem;color:var(--gold);">eagleselitepk@gmail.com</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('routes')">Routes & Timings</a>
+        <a onclick="showPage('stations')">Pickup Stations</a>
+        <a onclick="showPage('pricing')">Fee Structure</a>
+        <a onclick="showPage('contact')">Contact Us</a>
+      </div>
+      <div class="footer-col">
+        <h4>Destinations</h4>
+        <a onclick="showPage('routes')">Air University (E-9 & H-11)</a>
+        <a onclick="showPage('routes')">Bahria University</a>
+        <a onclick="showPage('routes')">NUST H-12</a>
+        <a onclick="showPage('routes')">FAST NUCES</a>
+        <a onclick="showPage('routes')">NDU & AHQ</a>
+        <a onclick="showPage('routes')">SKANS, CPE, Mannabi</a>
+      </div>
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="https://wa.me/923225166580" target="_blank">📱 0322-5166580</a>
+        <a href="https://wa.me/923135018125" target="_blank">📱 0313-5018125</a>
+        <a href="mailto:eagleselitepk@gmail.com">✉️ eagleselitepk@gmail.com</a>
+        <a>🏢 EETS Office No. 01, GT Road Barrier 3, Wah Cantt</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 <span>Eagles Elite Transport Service (SMC) Pvt Ltd</span>. All rights reserved.</p>
+      <div class="social-links">
+        <a href="https://instagram.com/eagleselitepk" target="_blank" class="social-link"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/923225166580" target="_blank" class="social-link"><i class="fab fa-whatsapp"></i></a>
+        <a href="mailto:eagleselitepk@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- FLOATING WHATSAPP -->
+<div class="float-wa">
+  <div class="float-wa-menu" id="waMenu">
+    <a href="https://wa.me/923225166580?text=Hello%20EETS!%20I%20want%20to%20book%20a%20seat." target="_blank" class="float-wa-item">
+      <i class="fab fa-whatsapp"></i> M. Hammad – 0322-5166580
+    </a>
+    <a href="https://wa.me/923135018125?text=Hello%20EETS!%20I%20want%20to%20book%20a%20seat." target="_blank" class="float-wa-item">
+      <i class="fab fa-whatsapp"></i> Engr. Waleed – 0313-5018125
+    </a>
+  </div>
+  <button class="float-wa-main" onclick="toggleWaMenu()">
+    <div class="float-wa-pulse"></div>
+    <i class="fab fa-whatsapp"></i>
+  </button>
+</div>
+
+<!-- ROUTE MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+  <div class="modal" id="routeModal">
+    <div class="modal-header">
+      <div>
+        <div id="modalBadge" class="route-badge" style="margin-bottom:8px;"></div>
+        <h2 id="modalTitle"></h2>
+      </div>
+      <button class="modal-close" onclick="closeModal()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <img id="modalImg" src="" alt="" style="width:100%;height:160px;object-fit:cover;border-radius:10px;margin-bottom:20px;">
+      <div class="timing-grid" id="timingGrid"></div>
+      <div class="modal-fee" id="modalFee"></div>
+      <div id="specialNotice"></div>
+      <div class="modal-wa">
+        <a href="https://wa.me/923225166580?text=Hello%20EETS!%20I%20want%20to%20book%20a%20seat%20for%20this%20route." target="_blank" class="wa-contact-btn">
+          <i class="fab fa-whatsapp"></i> M. Hammad
+        </a>
+        <a href="https://wa.me/923135018125?text=Hello%20EETS!%20I%20want%20to%20book%20a%20seat%20for%20this%20route." target="_blank" class="wa-contact-btn">
+          <i class="fab fa-whatsapp"></i> Engr. Waleed
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ========== ROUTE DATA ==========
+const routeData = {
+  'air-university': {
+    title:'Air University (E-9)',badge:'E-9 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1562774053-701939374585?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'bahria-university':{ title:'Bahria University (E-9)',badge:'E-9 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'bahria-e9':{ title:'Bahria University (E-9)',badge:'E-9 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'ndu':{ title:'National Defence University',badge:'E-9 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'ahq':{ title:'Air Force Headquarters (AHQ)',badge:'E-9 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1569163139394-de4e4f43e4e3?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'paf':{ title:'PAF Hospital',badge:'E-9 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'dci':{ title:'DCI Gate (F-10)',badge:'F-10 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'skans':{ title:'SKANS School of Accountancy',badge:'F-8 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'cpe':{ title:'CPE Islamabad',badge:'F-8 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1497366412874-3415097a27e7?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'mannabi':{ title:'Mannabi Business School',badge:'F-8 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'rise':{ title:'RISE Institute',badge:'F-8 Sector',fee:12000,acFee:500,
+    img:'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['12:30 PM','2:30 PM','3:15 PM','4:30 PM','5:30 PM','6:30 PM (Optional)','8:30 PM','9:15 PM'],
+    special:false
+  },
+  'au-h11':{ title:'Air University (H-11)',badge:'H-11 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1562774053-701939374585?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['1:00 PM','3:00 PM','4:30 PM','5:30 PM','6:00 PM (Optional)','8:30 PM','9:00 PM'],
+    special:false
+  },
+  'bu-h11':{ title:'Bahria University (H-11)',badge:'H-11 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['1:00 PM','3:00 PM','4:30 PM','5:30 PM','6:00 PM (Optional)','8:30 PM','9:00 PM'],
+    special:false
+  },
+  'fast-h11':{ title:'FAST NUCES (H-11)',badge:'H-11 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1497366412874-3415097a27e7?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['1:00 PM','3:00 PM','4:30 PM','5:30 PM','6:00 PM (Optional)','8:30 PM','9:00 PM'],
+    special:false
+  },
+  'tmuc':{ title:'TMUC (H-11)',badge:'H-11 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['1:00 PM','3:00 PM','4:30 PM','5:30 PM','6:00 PM (Optional)','8:30 PM','9:00 PM'],
+    special:false
+  },
+  'islamic':{ title:'International Islamic University',badge:'H-11 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['1:00 PM','3:00 PM','4:30 PM','5:30 PM','6:00 PM (Optional)','8:30 PM','9:00 PM'],
+    special:false
+  },
+  'alhuda':{ title:'Al Huda International',badge:'H-11 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1607237138185-eedd9c632b0b?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['1:00 PM','3:00 PM','4:30 PM','5:30 PM','6:00 PM (Optional)','8:30 PM','9:00 PM'],
+    special:false
+  },
+  'beaconhouse':{ title:'Beaconhouse School System',badge:'H-11 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1519452635265-7b1fbfd1e4e0?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['1:00 PM','3:00 PM','4:30 PM','5:30 PM','6:00 PM (Optional)','8:30 PM','9:00 PM'],
+    special:false
+  },
+  'futureworld':{ title:'Future World School & College',badge:'H-11 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['1:00 PM','3:00 PM','4:30 PM','5:30 PM','6:00 PM (Optional)','8:30 PM','9:00 PM'],
+    special:false
+  },
+  'ibnesina':{ title:'Ibn e Sina Institute',badge:'H-11 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['1:00 PM','3:00 PM','4:30 PM','5:30 PM','6:00 PM (Optional)','8:30 PM','9:00 PM'],
+    special:false
+  },
+  'paec':{ title:'PAEC General Hospital (H-11)',badge:'H-11 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=700&q=80',
+    arrivals:['7:45 AM','9:45 AM','11:30 AM','12:45 PM (Optional)','3:45 PM'],
+    departures:['1:00 PM','3:00 PM','4:30 PM','5:30 PM','6:00 PM (Optional)','8:30 PM','9:00 PM'],
+    special:false
+  },
+  'nust':{ title:'NUST University (H-12)',badge:'H-12 Sector',fee:11000,acFee:500,
+    img:'https://images.unsplash.com/photo-1497366216548-37526070297c?w=700&q=80',
+    arrivals:['9:00 AM','9:45 AM','11:30 AM','4:45 PM'],
+    departures:['2:00 PM','5:00 PM','8:30 PM','9:00 PM'],
+    special:true,
+    specialMsg:'⚡ NUST has unique timings different from other routes, specifically aligned with the NUST H-12 academic schedule for all departments.'
+  }
+};
+
+// ========== MODAL ==========
+function openModal(id) {
+  const d = routeData[id]; if(!d) return;
+  document.getElementById('modalTitle').textContent = d.title;
+  document.getElementById('modalBadge').textContent = d.badge;
+  document.getElementById('modalImg').src = d.img;
+  document.getElementById('modalImg').alt = d.title;
+
+  let tHtml = `<div class="timing-col"><h4><i class="fas fa-arrow-right"></i> Arrivals</h4>`;
+  d.arrivals.forEach(t => { tHtml += `<div class="timing-item"><i class="fas fa-circle" style="font-size:6px;"></i>${t}</div>`; });
+  tHtml += `</div><div class="timing-col"><h4><i class="fas fa-arrow-left"></i> Departures</h4>`;
+  d.departures.forEach(t => { tHtml += `<div class="timing-item"><i class="fas fa-circle" style="font-size:6px;"></i>${t}</div>`; });
+  tHtml += `</div>`;
+  document.getElementById('timingGrid').innerHTML = tHtml;
+
+  document.getElementById('modalFee').innerHTML = `
+    <div class="modal-fee-row"><span>Seat Reservation</span><span class="amount">Rs. 1,000</span></div>
+    <div class="modal-fee-row"><span>Monthly Fee</span><span class="amount">Rs. ${d.fee.toLocaleString()}</span></div>
+    <div class="modal-fee-row"><span>AC Charges (Summer)</span><span class="amount">Rs. ${d.acFee} extra</span></div>
+    <div class="modal-fee-row"><span>With AC</span><span class="amount">Rs. ${(d.fee+d.acFee).toLocaleString()}</span></div>
+    <div class="modal-fee-row"><span>Fee Deadline</span><span class="amount">10th of Month</span></div>
+  `;
+  document.getElementById('specialNotice').innerHTML = d.special
+    ? `<div class="special-notice"><i class="fas fa-info-circle"></i>${d.specialMsg}</div>` : '';
+
+  document.getElementById('modalOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeModalOutside(e) {
+  if(e.target === document.getElementById('modalOverlay')) closeModal();
+}
+
+// ========== PAGES ==========
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-'+name).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const navEl = document.getElementById('nav-'+name);
+  if(navEl) navEl.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+  initReveal();
+}
+
+// ========== FILTER ==========
+function filterRoutes(sector, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.route-card').forEach(c => {
+    c.style.display = (sector === 'all' || c.dataset.sector === sector) ? '' : 'none';
+  });
+}
+
+// ========== THEME ==========
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.getAttribute('data-theme') === 'dark';
+  html.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  document.getElementById('theme-icon').className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+}
+
+// ========== MOBILE NAV ==========
+function toggleMobileNav() {
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.getElementById('mobileOverlay').classList.toggle('open');
+}
+
+// ========== WA FLOAT ==========
+function toggleWaMenu() {
+  document.getElementById('waMenu').classList.toggle('open');
+}
+
+// ========== ACCORDION ==========
+function toggleAccordion(header) {
+  const item = header.parentElement;
+  item.classList.toggle('open');
+}
+
+// ========== SCROLL NAV ==========
+window.addEventListener('scroll', () => {
+  const nav = document.getElementById('navbar');
+  nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// ========== SCROLL REVEAL ==========
+function initReveal() {
+  setTimeout(() => {
+    const els = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+    }, {threshold:0.1});
+    els.forEach(el => { el.classList.remove('visible'); observer.observe(el); });
+  }, 100);
+}
+initReveal();
+
+// ========== PARTICLES ==========
+function createParticles() {
+  const canvas = document.querySelector('.bg-canvas');
+  for(let i=0;i<12;i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      width:${2+Math.random()*4}px;
+      height:${2+Math.random()*4}px;
+      left:${Math.random()*100}%;
+      animation-duration:${8+Math.random()*12}s;
+      animation-delay:${Math.random()*8}s;
+    `;
+    canvas.appendChild(p);
+  }
+}
+createParticles();
+
+// Route cards on home page also have pointer cursor
+document.querySelectorAll('.route-card').forEach(c => c.style.cursor='pointer');
+</script>
+</body>
+</html>
